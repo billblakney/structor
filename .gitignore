@@ -1,0 +1,6 @@
+*.H
+*.swp
+temp*
+.meta
+.project
+.cproject
