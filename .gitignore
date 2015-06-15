@@ -1,6 +1,11 @@
 *.H
+*.o
 *.swp
+*.tab.c
+*.tab.h
+lex.yy.c
 temp*
 .meta
 .project
 .cproject
+structor

@@ -15,8 +15,8 @@ CC = g++
 #CFLAGS = -g -std=c++11 $(INCLUDES)
 CFLAGS = -g -std=gnu++11 $(INCLUDES)
 
-all : parser lexer
-	$(CC) $(CFLAGS) -o $(EXE) lex.yy.c example0.tab.c
+all : parser lexer structorutil field
+	$(CC) $(CFLAGS) -o $(EXE) lex.yy.c example0.tab.c StructorUtil.o Field.o
 
  
 lexer : example0.l
@@ -24,6 +24,12 @@ lexer : example0.l
  
 parser : example0.y
 	bison -d example0.y
+
+field: Field.cpp Field.h
+	$(CC) $(CFLAGS) -c Field.cpp
+
+structorutil: StructorUtil.cpp StructorUtil.h
+	$(CC) $(CFLAGS) -c StructorUtil.cpp
 
 clean :
 	rm -f example0.tab.c example0.tab.h lex.yy.c $(EXE)

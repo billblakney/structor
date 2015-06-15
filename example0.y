@@ -8,7 +8,12 @@ using namespace std;
 extern int yylex();
 extern void yyerror(char *);
 
+#include "StructorUtil.h"
+#include "Field.h"
+
 vector<string> structs;
+
+static StructorUtil util;
 
 void pMatch(const char *aRuleName)
 {
@@ -17,12 +22,22 @@ void pMatch(const char *aRuleName)
       printf("matched: %s\n",aRuleName);
 }
 
+void pField(string *aName,string *aType,int aIsPointer)
+{
+   static int _debug = 0;
+   Field tField(*aName,*aType,aIsPointer);
+   util.addField(tField);
+}
+
 void pStruct(string *aStructName)
 {
    static int _debug = 0;
    structs.push_back(*aStructName);
    if( _debug )
       printf("struct: %s\n",aStructName->c_str());
+
+   util.printFields();
+   util.clearFields();
 }
 
 void pSummary()
@@ -32,6 +47,7 @@ void pSummary()
       printf("struct: %s\n",it->c_str());
    }
 }
+
 %}
 
 
@@ -65,10 +81,10 @@ member_list: member
                {pMatch("member_list");}
 
 member: NAME NAME SEMICOLON
-           {pMatch("member");}
+           {pField($1,$2,0);}
         |
         NAME STAR NAME SEMICOLON
-           {pMatch("pointer member");}
+           {pField($1,$3,1);}
 
 enum_decl: TYPEDEF ENUM NAME LBRACE enum_list RBRACE NAME SEMICOLON
    {pMatch("enum_decl");}
