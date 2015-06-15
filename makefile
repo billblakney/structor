@@ -32,4 +32,4 @@ structorutil: StructorUtil.cpp StructorUtil.h
 	$(CC) $(CFLAGS) -c StructorUtil.cpp
 
 clean :
-	rm -f example0.tab.c example0.tab.h lex.yy.c $(EXE)
+	rm -f *.o example0.tab.c example0.tab.h lex.yy.c $(EXE)
