@@ -9,5 +9,6 @@ temp*
 .project
 .cproject
 structor
+structor.exe
 .DS_store
 *.dSYM/
