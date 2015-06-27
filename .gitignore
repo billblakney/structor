@@ -9,3 +9,5 @@ temp*
 .project
 .cproject
 structor
+.DS_store
+*.dSYM/
