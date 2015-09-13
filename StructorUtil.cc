@@ -1,5 +1,6 @@
+#include "StructorUtil.hh"
+
 #include <iostream>
-#include "StructorUtil.h"
 
 StructorUtil::StructorUtil() {
 }

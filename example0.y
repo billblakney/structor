@@ -8,10 +8,11 @@ using namespace std;
 extern int yylex();
 extern void yyerror(char *);
 
-#include "StructorUtil.h"
-#include "Field.h"
+#include "StructorUtil.hh"
+#include "Structure.hh"
+#include "Field.hh"
 
-vector<string> structs;
+vector<Structure *> structs;
 
 static StructorUtil util;
 
@@ -35,12 +36,16 @@ void pField(string *aName,string *aType,int aIsPointer)
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void pStruct(string *aStructName)
+void pStruct(std::string *aStructName)
 {
-   static int _debug = 1;
-   structs.push_back(*aStructName);
+   static int _debug = 0;
+
+   Structure *tStructure = new Structure(*aStructName);
+   delete aStructName;
+   
+   structs.push_back(tStructure);
    if( _debug )
-      printf("struct: %s\n",aStructName->c_str());
+      printf("struct: %s\n",tStructure->_Name.c_str());
 
    util.printFields();
    util.clearFields();
@@ -50,12 +55,10 @@ void pStruct(string *aStructName)
 //-----------------------------------------------------------------------------
 void pSummary()
 {
-printf("pSummaryYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYy");
    static int _debug = 1;
-   for( vector<string>::iterator it = structs.begin() ; it != structs.end(); it++ ){
-   printf("hello");
-      printf("struct: %s\n",it->c_str());
-   printf("goodbye");
+   vector<Structure *>::iterator it;
+   for( it = structs.begin() ; it != structs.end(); it++ ){
+      printf("struct: %s\n",(*it)->_Name.c_str());
    }
 }
 

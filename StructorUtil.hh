@@ -1,17 +1,16 @@
-#ifndef STRUCTORUTIL_H_
-#define STRUCTORUTIL_H_
+#ifndef STRUCTORUTIL_HH_
+#define STRUCTORUTIL_HH_
 
 #include <string>
 #include <vector>
-#include "Field.h"
+
+#include "Field.hh"
+#include "Structure.hh"
 
 using namespace std;
 
 class StructorUtil {
 public:
-	class Struct {
-		string name;
-	};
 
 	StructorUtil();
 	virtual ~StructorUtil();
@@ -20,8 +19,8 @@ public:
 	void printFields();
 	void clearFields();
 private:
-	vector<Struct> _Structs;
+	vector<Structure> _Structs;
 	vector<Field>  _Fields;
 };
 
-#endif /* STRUCTORUTIL_H_ */
+#endif /* STRUCTORUTIL_HH_ */

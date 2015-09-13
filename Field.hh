@@ -1,5 +1,5 @@
-#ifndef FIELD_H_
-#define FIELD_H_
+#ifndef FIELD_HH_
+#define FIELD_HH_
 
 #include <string>
 
@@ -21,4 +21,4 @@ public:
 	string toString();
 };
 
-#endif /* FIELD_H_ */
+#endif /* FIELD_HH_ */
