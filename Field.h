@@ -5,6 +5,10 @@
 
 using namespace std;
 
+/**
+ * A Field class instance represents a field of a structure.
+ */
+
 class Field {
 public:
 	bool _IsPointer;

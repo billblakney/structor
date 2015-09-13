@@ -15,6 +15,8 @@ vector<string> structs;
 
 static StructorUtil util;
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void pMatch(const char *aRuleName)
 {
    static int _debug = 0;
@@ -22,6 +24,8 @@ void pMatch(const char *aRuleName)
       printf("matched: %s\n",aRuleName);
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void pField(string *aName,string *aType,int aIsPointer)
 {
    static int _debug = 0;
@@ -29,9 +33,11 @@ void pField(string *aName,string *aType,int aIsPointer)
    util.addField(tField);
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void pStruct(string *aStructName)
 {
-   static int _debug = 0;
+   static int _debug = 1;
    structs.push_back(*aStructName);
    if( _debug )
       printf("struct: %s\n",aStructName->c_str());
@@ -40,11 +46,16 @@ void pStruct(string *aStructName)
    util.clearFields();
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void pSummary()
 {
+printf("pSummaryYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYy");
    static int _debug = 1;
    for( vector<string>::iterator it = structs.begin() ; it != structs.end(); it++ ){
+   printf("hello");
       printf("struct: %s\n",it->c_str());
+   printf("goodbye");
    }
 }
 
@@ -62,6 +73,15 @@ void pSummary()
 %start hfile
 
 %%
+
+
+// TODO For mem mgt, need to manage anything new-ed by the lex file.
+// As of this writing, NAME is the only returned value that needs to be managed.
+
+// Three elements are recognized in an "h" file:
+// - enumeration declaration
+// - structure definition
+// - comment
 
 hfile: /* empty */
      | hfile enum_decl

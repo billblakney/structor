@@ -20,8 +20,8 @@ public:
 	void printFields();
 	void clearFields();
 private:
-	vector<Struct> structs;
-	vector<Field> fields;
+	vector<Struct> _Structs;
+	vector<Field>  _Fields;
 };
 
 #endif /* STRUCTORUTIL_H_ */

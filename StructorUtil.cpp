@@ -8,16 +8,16 @@ StructorUtil::~StructorUtil() {
 }
 
 void StructorUtil::addField(Field field) {
-	fields.push_back(field);
+	_Fields.push_back(field);
 }
 
 void StructorUtil::clearFields() {
-	fields.clear();
+	_Fields.clear();
 }
 
 void StructorUtil::printFields() {
 	cout << "FIELDS:" << endl;
-	for( auto field: fields ){
+	for( auto field: _Fields ){
 		cout << "field: " << field.toString() << endl;
 	}
 }
