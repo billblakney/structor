@@ -2,6 +2,7 @@
 #define STRUCTORUTIL_HH_
 
 #include <string>
+#include <map>
 #include <vector>
 
 #include "Field.hh"
@@ -23,8 +24,20 @@ public:
 
 	void clearFields();
 
+	void onMatch(const char *aRuleName);
+
+	void onField(string *aName,string *aType,int aIsPointer);
+
+	void onStruct(std::string *aStructName);
+
+	std::string getDotString(std::string aName,std::string aPrefix);
+
+	void printSummary();
+
+	std::map<std::string,Structure *> _Structs;
+
 private:
-	vector<Structure> _Structs;
+
 	vector<Field>  _Fields;
 };
 
