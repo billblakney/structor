@@ -8,8 +8,13 @@ StructorUtil::StructorUtil() {
 StructorUtil::~StructorUtil() {
 }
 
-void StructorUtil::addField(Field field) {
+void StructorUtil::pushField(Field field) {
 	_Fields.push_back(field);
+}
+
+vector<Field> StructorUtil::pullFields()
+{
+  return _Fields;
 }
 
 void StructorUtil::clearFields() {

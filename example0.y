@@ -31,7 +31,7 @@ void pField(string *aName,string *aType,int aIsPointer)
 {
    static int _debug = 0;
    Field tField(*aName,*aType,aIsPointer);
-   util.addField(tField);
+   util.pushField(tField);
 }
 
 //-----------------------------------------------------------------------------
@@ -43,12 +43,12 @@ void pStruct(std::string *aStructName)
    Structure *tStructure = new Structure(*aStructName);
    delete aStructName;
    
+   tStructure->addFields(util.pullFields());
+   util.clearFields();
+   
    structs.push_back(tStructure);
    if( _debug )
-      printf("struct: %s\n",tStructure->_Name.c_str());
-
-   util.printFields();
-   util.clearFields();
+      printf("struct: %s\n",tStructure->toString().c_str());
 }
 
 //-----------------------------------------------------------------------------
@@ -58,7 +58,7 @@ void pSummary()
    static int _debug = 1;
    vector<Structure *>::iterator it;
    for( it = structs.begin() ; it != structs.end(); it++ ){
-      printf("struct: %s\n",(*it)->_Name.c_str());
+      printf("struct: %s\n",(*it)->toString().c_str());
    }
 }
 

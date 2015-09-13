@@ -15,9 +15,14 @@ public:
 	StructorUtil();
 	virtual ~StructorUtil();
 
-	void addField(Field field);
+	void pushField(Field field);
+
+	vector<Field> pullFields();
+
 	void printFields();
+
 	void clearFields();
+
 private:
 	vector<Structure> _Structs;
 	vector<Field>  _Fields;
