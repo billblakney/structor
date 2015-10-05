@@ -13,7 +13,8 @@ EXE = structor
 CC = g++
 # To avoid missing 'fileno', need to use gnu+11 instead of c+11
 #CFLAGS = -g -std=c++11 $(INCLUDES)
-CFLAGS = -g -std=gnu++11 $(INCLUDES)
+#CFLAGS = -g -std=gnu++11 $(INCLUDES)
+CFLAGS = -g $(INCLUDES)
 
 all : parser lexer structorutil field structure
 	$(CC) $(CFLAGS) -o $(EXE) lex.yy.c example0.tab.c StructorUtil.o Field.o Structure.o

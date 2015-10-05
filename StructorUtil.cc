@@ -1,5 +1,9 @@
 #include "StructorUtil.hh"
 
+#ifndef C11
+#include <iterator>
+#include <stdio.h>
+#endif
 #include <iostream>
 #include <sstream>
 
@@ -24,7 +28,13 @@ void StructorUtil::clearFields() {
 
 void StructorUtil::printFields() {
 	cout << "FIELDS:" << endl;
+#ifdef C11
 	for( auto field: _Fields ){
+#else
+	vector<Field>::iterator tIter;
+	for( tIter = _Fields.begin(); tIter != _Fields.end(); tIter++ ){
+		Field field = *tIter;
+#endif
 		cout << "field: " << field.toString() << endl;
 	}
 }
