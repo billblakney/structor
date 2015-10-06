@@ -26,6 +26,15 @@ void Structure::addField(Field aField)
   _Fields.push_back(aField);
 }
 
+void Structure::postProcess()
+{
+  vector<Field>::iterator tIter;
+  for (tIter = _Fields.begin(); tIter != _Fields.end(); tIter++)
+  {
+
+  }
+}
+
 std::string Structure::toString()
 {
   stringstream tStream;
