@@ -11,9 +11,11 @@ using namespace std;
 
 class Field {
 public:
+  enum Level { eUnknown, ePrimitive, eStructure, eArray };
 	bool _IsPointer;
 	string _Type;
 	string _Name;
+	Level  _Level;
 
 	Field(string aType, string aName, int aIsPointer);
 	virtual ~Field();

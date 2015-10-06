@@ -8,6 +8,9 @@ void yyerror(char *);
 int yyparse(void);
 
 extern void pSummary();
+#if 0 // TODO rm
+extern void pPostProcess();
+#endif
 
 void pLex(const char *aToken)
 {
@@ -49,13 +52,14 @@ void.*(.*);             {pLex("void fn");}
 void yyerror(char *str) {printf("ERROR: Could not parse!\n");}
 int yywrap(void) {}
 
-int main(int argc,char **argv)
+void lex_main(char *tHeaderFile)
 {
-   if( argc < 2 )
-      printf("Usage: pp <in_file>\n");
-   FILE* file = fopen(argv[1],"r");
+   FILE* file = fopen(tHeaderFile,"r");
    yyin = file;
    yyparse();
    fclose(file);
    pSummary();
+#if 0 // TODO rm
+   pPostProcess();
+#endif
 }

@@ -12,3 +12,5 @@ structor
 structor.exe
 .DS_store
 *.dSYM/
+car.txt
+out.txt

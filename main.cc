@@ -1,7 +1,11 @@
+#include <cstdio>
 
-extern int lex_main(int argc,char **argv);
+extern void lex_main(char *aHeaderFile);
 
 int main(int argc,char **argv)
 {
-  lex_main(argc,argv);
+   if( argc < 2 )
+      printf("Usage: pp <in_file>\n");
+
+  lex_main(argv[1]);
 }

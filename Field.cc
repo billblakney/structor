@@ -9,6 +9,7 @@ Field::Field(string aType, string aName, int aIsPointer)
 	_Type = aType;
 	_Name = aName;
 	_IsPointer = aIsPointer ? true : false;
+	_Level = eUnknown;
 }
 
 //-----------------------------------------------------------------------------

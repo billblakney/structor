@@ -90,10 +90,10 @@ std::string StructorUtil::getDotString(std::string aName,std::string aPrefix)
     vector<Field>::iterator it;
     for( it = tStructure->_Fields.begin(); it != tStructure->_Fields.end(); it++)
     {
-      std::string tFieldName = it->_Name;
-      std::string tFieldType = it->_Type;
-      std::string tFieldString = aPrefix + "." + tFieldName;
-      std::string tFieldDotString = getDotString(tFieldType,tFieldString);
+      std::string tName = it->_Name;
+      std::string tType = it->_Type;
+      std::string tFieldString = aPrefix + "." + tName;
+      std::string tFieldDotString = getDotString(tType,tFieldString);
       if( tFieldDotString.length() )
       {
         tReturn << tFieldDotString;
