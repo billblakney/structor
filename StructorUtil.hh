@@ -32,6 +32,8 @@ public:
 
 	std::string getDotString(std::string aName,std::string aPrefix);
 
+	void postProcess();
+
 	void printSummary();
 
 	std::map<std::string,Structure *> _Structs;

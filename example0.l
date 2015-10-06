@@ -2,15 +2,15 @@
 #include <cstdio>
 #include <cstdlib>
 #include <string>
+#include "StructorUtil.hh"
+
 using namespace std;
+
 #include "example0.tab.h"
 void yyerror(char *);
 int yyparse(void);
 
-extern void pSummary();
-#if 0 // TODO rm
-extern void pPostProcess();
-#endif
+extern StructorUtil &getStructorUtil();
 
 void pLex(const char *aToken)
 {
@@ -52,14 +52,11 @@ void.*(.*);             {pLex("void fn");}
 void yyerror(char *str) {printf("ERROR: Could not parse!\n");}
 int yywrap(void) {}
 
-void lex_main(char *tHeaderFile)
+StructorUtil &lex_main(char *tHeaderFile)
 {
    FILE* file = fopen(tHeaderFile,"r");
    yyin = file;
    yyparse();
    fclose(file);
-   pSummary();
-#if 0 // TODO rm
-   pPostProcess();
-#endif
+   return getStructorUtil();
 }

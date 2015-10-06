@@ -19,6 +19,8 @@ public:
 
   void addField(Field aField);
 
+  void postProcess();
+
   std::string toString();
 
   std::string _Name;

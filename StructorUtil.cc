@@ -110,6 +110,24 @@ std::string StructorUtil::getDotString(std::string aName,std::string aPrefix)
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
+void StructorUtil::postProcess()
+{
+  std::string tCarReportType("CONTACT_ATTRIBUTES_REPORT_T");
+
+  map<std::string,Structure *>::iterator it;
+  it = _Structs.find(tCarReportType);
+  if( it == _Structs.end() )
+  {
+    cout << "couldn't find " << tCarReportType;
+  }
+  else
+  {
+    cout << "FOUND " << tCarReportType;
+  }
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void StructorUtil::printSummary()
 {
    static int _debug = 1;
