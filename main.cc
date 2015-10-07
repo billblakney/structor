@@ -9,6 +9,6 @@ int main(int argc,char **argv)
       printf("Usage: pp <in_file>\n");
 
    StructorUtil &util = lex_main(argv[1]);
-   util.printSummary();
+//   util.printSummary();
    util.postProcess();
 }

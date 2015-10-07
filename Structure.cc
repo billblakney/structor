@@ -29,33 +29,89 @@ void Structure::addField(Field aField)
   _Fields.push_back(aField);
 }
 
-void Structure::postProcess(StructorUtil *aStructUtil)
+//TODO deep enough? replace generically?
+static std::string blanks[] = {
+    "",
+    "  ",
+    "    ",
+    "      ",
+    "        ",
+    "          ",
+    "            ",
+    "              ",
+    "                ",
+    "                  ",
+};
+
+void Structure::postProcess(StructorUtil *aStructUtil,int aLevel)
 //void Structure::postProcess(std::map<std::string,Structure *> &aStructMap)
 {
   boost::regex array_size_regex("^([a-zA-Z]+)_size$");
 
-  std::cout << "root node: " << _Name << std::endl;
+  if (aLevel == 0)
+  {
+    std::cout << "root node: " << _Name << std::endl;
+  }
 
   vector<Field>::iterator tIter;
   for (tIter = _Fields.begin(); tIter != _Fields.end(); tIter++)
   {
     boost::match_results<std::string::const_iterator> what;
 
+    // is array size line
     if (boost::regex_match(tIter->_Name,array_size_regex))
     {
       std::string tName = what[1];
-      std::cout << "array node: "
+      std::cout << blanks[aLevel];
+      std::cout << "array size entry: "
           << tIter->_Type << ":" << tIter->_Name << std::endl;
-//      if( aStructUtil->isPrimitive)
     }
-    else if (aStructUtil->isPrimitive(tIter->_Type))
+    else if (tIter->_IsPointer)
     {
-      std::cout << "primitive node: "
-          << tIter->_Type << ":" << tIter->_Name << std::endl;
+      // is primitive pointer
+      if (aStructUtil->isPrimitive(tIter->_Type))
+      {
+      std::cout << blanks[aLevel];
+        std::cout << "primitive array node: "
+            << tIter->_Type << ":" << tIter->_Name << std::endl;
+      }
+      // is struct pointer
+      else
+      {
+      std::cout << blanks[aLevel];
+        std::cout << "struct array node: "
+            << tIter->_Type << ":" << tIter->_Name << std::endl;
+        Structure *tStruct = aStructUtil->getStructure(tIter->_Type);
+        if (tStruct != NULL)
+        {
+          tStruct->postProcess(aStructUtil,++aLevel);
+          --aLevel;
+        }
+      }
     }
+    // is struct
+    else if (!aStructUtil->isPrimitive(tIter->_Type))
+    {
+      std::cout << blanks[aLevel];
+      std::cout << "struct node: "
+          << tIter->_Type << ":" << tIter->_Name << std::endl;
+      Structure *tStruct = aStructUtil->getStructure(tIter->_Type);
+      if (tStruct != NULL)
+      {
+        tStruct->postProcess(aStructUtil,++aLevel);
+        --aLevel;
+      }
+      else
+      {
+      std::cout << blanks[aLevel];
+        std::cout << "ERROR: can't find struct " << tIter->_Name << std::endl;
+      }
+    }
+    // is primitive
     else
     {
-      std::cout << "struct node: "
+      std::cout << blanks[aLevel];
+      std::cout << "primitive node: "
           << tIter->_Type << ":" << tIter->_Name << std::endl;
     }
   }

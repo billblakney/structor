@@ -22,7 +22,7 @@ public:
 
   void addField(Field aField);
 
-  void postProcess(StructorUtil *aStructUtil);
+  void postProcess(StructorUtil *aStructUtil,int aLevel = 0);
 
   std::string toString();
 
