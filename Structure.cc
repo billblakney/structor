@@ -59,7 +59,7 @@ void Structure::postProcess(StructorUtil *aStructUtil,int aLevel)
     boost::match_results<std::string::const_iterator> what;
 
     // is array size line
-    if (boost::regex_match(tIter->_Name,array_size_regex))
+    if (boost::regex_match(tIter->_Name,what,array_size_regex))
     {
       std::string tName = what[1];
       std::cout << blanks[aLevel];
