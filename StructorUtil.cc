@@ -77,6 +77,21 @@ void StructorUtil::onStruct(std::string *aStructName)
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
+bool StructorUtil::isPrimitive(std::string aType)
+{
+  map<std::string,Structure *>::iterator tStructIter;
+  tStructIter = _Structs.find(aType);
+
+  if( tStructIter == _Structs.end() )
+  {
+    return true;
+  }
+
+  return false;
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 std::string StructorUtil::getDotString(std::string aName,std::string aPrefix)
 {
   stringstream tReturn;
@@ -123,6 +138,7 @@ void StructorUtil::postProcess()
   else
   {
     cout << "FOUND " << tCarReportType;
+    it->second->postProcess(this);
   }
 }
 

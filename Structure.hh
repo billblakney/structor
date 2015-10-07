@@ -2,8 +2,11 @@
 #define STRUCTURE_HH_
 
 #include <string>
+#include <map>
 #include <vector>
 #include "Field.hh"
+
+class StructorUtil;
 
 class Structure
 {
@@ -19,7 +22,7 @@ public:
 
   void addField(Field aField);
 
-  void postProcess();
+  void postProcess(StructorUtil *aStructUtil);
 
   std::string toString();
 

@@ -30,6 +30,8 @@ public:
 
 	void onStruct(std::string *aStructName);
 
+	bool isPrimitive(std::string aType);
+
 	std::string getDotString(std::string aName,std::string aPrefix);
 
 	void postProcess();

@@ -5,7 +5,7 @@ INCLUDES = -I./include -IC:/tools/cygwin64/usr/include
 INCLUDES = -I./include -I/cygdrive/c/tools/cygwin64/usr/i686-pc-mingw32/sys-root/mingw/include
 endif
 
-LIBS = -llog4cxx -lboost_regex
+#LIBS = -llog4cxx -lboost_regex -lboost
 LIBS = -lboost_regex
 
 EXE = structor
@@ -17,7 +17,7 @@ CC = g++
 CFLAGS = -g $(INCLUDES)
 
 all : parser lexer structorutil field structure main
-	$(CC) $(CFLAGS) -o $(EXE) lex.yy.c example0.tab.c StructorUtil.o Field.o Structure.o main.o
+	$(CC) $(CFLAGS) $(LIBS) -o $(EXE) lex.yy.c example0.tab.c StructorUtil.o Field.o Structure.o main.o
 
  
 lexer : example0.l
