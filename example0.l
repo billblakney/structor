@@ -2,7 +2,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <string>
-#include "StructorUtil.hh"
+#include "StructorBuilder.hh"
 
 using namespace std;
 
@@ -10,7 +10,7 @@ using namespace std;
 void yyerror(char *);
 int yyparse(void);
 
-extern StructorUtil &getStructorUtil();
+extern StructorBuilder &getStructorBuilder();
 
 void pLex(const char *aToken)
 {
@@ -52,11 +52,11 @@ void.*(.*);             {pLex("void fn");}
 void yyerror(char *str) {printf("ERROR: Could not parse!\n");}
 int yywrap(void) {}
 
-StructorUtil &lex_main(char *tHeaderFile)
+StructorBuilder &lex_main(char *tHeaderFile)
 {
    FILE* file = fopen(tHeaderFile,"r");
    yyin = file;
    yyparse();
    fclose(file);
-   return getStructorUtil();
+   return getStructorBuilder();
 }

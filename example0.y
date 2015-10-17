@@ -8,17 +8,17 @@ using namespace std;
 extern int yylex();
 extern void yyerror(char *);
 
-#include "StructorUtil.hh"
+#include "StructorBuilder.hh"
 #include "Structure.hh"
 #include "Field.hh"
 
-static StructorUtil u;
+static StructorBuilder sb;
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-StructorUtil &getStructorUtil()
+StructorBuilder &getStructorBuilder()
 {
-   return u;
+   return sb;
 }
 
 %}
@@ -47,44 +47,44 @@ StructorUtil &getStructorUtil()
 
 hfile: /* empty */
      | hfile enum_decl
-          {u.onMatch("hfile enum_decl@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");}
+          {sb.onMatch("hfile enum_decl@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");}
      | hfile struct_decl
-          {u.onMatch("hfile struct_decl@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");}
+          {sb.onMatch("hfile struct_decl@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");}
      | hfile COMMENT
-          {u.onMatch("comment\n");}
+          {sb.onMatch("comment\n");}
 
 struct_decl: TYPEDEF STRUCT LBRACE member_list RBRACE NAME SEMICOLON
-   {u.onStruct($6); delete $6;}
+   {sb.onStruct($6); delete $6;}
 
 member_list: member
-               {u.onMatch("member_list");}
+               {sb.onMatch("member_list");}
              |
              member_list member
-               {u.onMatch("member_list");}
+               {sb.onMatch("member_list");}
 
 member: NAME NAME SEMICOLON
-           {u.onField($1,$2,0);}
+           {sb.onField($1,$2,0);}
         |
         NAME STAR NAME SEMICOLON
-           {u.onField($1,$3,1);}
+           {sb.onField($1,$3,1);}
 
 enum_decl: TYPEDEF ENUM NAME LBRACE enum_list RBRACE NAME SEMICOLON
-   {u.onMatch("enum_decl");}
+   {sb.onMatch("enum_decl");}
 
 enum_list: last_enum_item
-   {u.onMatch("last_enum_item 1");}
+   {sb.onMatch("last_enum_item 1");}
            |
            inner_enum_items last_enum_item
-   {u.onMatch("last_enum_item 2");}
+   {sb.onMatch("last_enum_item 2");}
 
 inner_enum_items: inner_enum_item
-   {u.onMatch("inner_enum_item 1");}
+   {sb.onMatch("inner_enum_item 1");}
            |
            inner_enum_items inner_enum_item
-   {u.onMatch("inner_enum_item 2");}
+   {sb.onMatch("inner_enum_item 2");}
 
 inner_enum_item: NAME EQUALS INT COMMA
-   {u.onMatch("inner_enum_item");}
+   {sb.onMatch("inner_enum_item");}
 
 last_enum_item: NAME EQUALS INT
-   {u.onMatch("last_enum_item");}
+   {sb.onMatch("last_enum_item");}

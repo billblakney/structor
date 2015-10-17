@@ -3,27 +3,37 @@
 #include <sstream>
 #include <boost/regex.hpp>
 #include "Structure.hh"
-#include "StructorUtil.hh"
+#include "StructorBuilder.hh"
 
+//-------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 Structure::Structure()
 {
 }
 
 
+//-------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 Structure::Structure(std::string aName)
 {
   _Name = aName;
 }
 
+//-------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 Structure::~Structure()
 {
 }
 
+//-------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 void Structure::addFields(vector<Field> aFields)
 {
   _Fields = aFields;
 }
 
+//-------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 void Structure::addField(Field aField)
 {
   _Fields.push_back(aField);
@@ -43,22 +53,32 @@ static std::string blanks[] = {
     "                  ",
 };
 
-void Structure::postProcess(StructorUtil *aStructUtil,int aLevel)
+//-------------------------------------------------------------------------------
+// Prints a description of the data structure in a hierarchical fashion.
+//-------------------------------------------------------------------------------
+void Structure::postProcess(StructorBuilder *aStructBuilder,int aLevel)
 //void Structure::postProcess(std::map<std::string,Structure *> &aStructMap)
 {
   boost::regex array_size_regex("^([a-zA-Z]+)_size$");
 
+  // If level is zero, this is the root node.
+  // Print the root node name at indent level, and increment the level to
+  // indent child fields.
   if (aLevel == 0)
   {
     std::cout << "root node: " << _Name << std::endl;
+    aLevel++;
   }
 
+  // Print all of the fields. For fields that are structs themselves,
+  // this method will be called recursively.
   vector<Field>::iterator tIter;
   for (tIter = _Fields.begin(); tIter != _Fields.end(); tIter++)
   {
     boost::match_results<std::string::const_iterator> what;
 
-    // is array size line
+    // For array size line,
+    // print the array type and name.
     if (boost::regex_match(tIter->_Name,what,array_size_regex))
     {
       std::string tName = what[1];
@@ -68,46 +88,52 @@ void Structure::postProcess(StructorUtil *aStructUtil,int aLevel)
     }
     else if (tIter->_IsPointer)
     {
-      // is primitive pointer
-      if (aStructUtil->isPrimitive(tIter->_Type))
+      // For primitive pointer,
+      // print type and name.
+      if (aStructBuilder->isPrimitive(tIter->_Type))
       {
-      std::cout << blanks[aLevel];
+        std::cout << blanks[aLevel];
         std::cout << "primitive array node: "
             << tIter->_Type << ":" << tIter->_Name << std::endl;
       }
-      // is struct pointer
+      // For struct pointer,
+      // print type and name, increment level, and call this routine
+      // recursively to print the contents of the struct.
       else
       {
-      std::cout << blanks[aLevel];
+        std::cout << blanks[aLevel];
         std::cout << "struct array node: "
             << tIter->_Type << ":" << tIter->_Name << std::endl;
-        Structure *tStruct = aStructUtil->getStructure(tIter->_Type);
+        Structure *tStruct = aStructBuilder->getStructure(tIter->_Type);
         if (tStruct != NULL)
         {
-          tStruct->postProcess(aStructUtil,++aLevel);
+          tStruct->postProcess(aStructBuilder,++aLevel);
           --aLevel;
         }
       }
     }
-    // is struct
-    else if (!aStructUtil->isPrimitive(tIter->_Type))
+    // For struct field,
+    // print type and name, then call this routine recursively to print the
+    // contents of the struct.
+    else if (!aStructBuilder->isPrimitive(tIter->_Type))
     {
       std::cout << blanks[aLevel];
       std::cout << "struct node: "
           << tIter->_Type << ":" << tIter->_Name << std::endl;
-      Structure *tStruct = aStructUtil->getStructure(tIter->_Type);
+      Structure *tStruct = aStructBuilder->getStructure(tIter->_Type);
       if (tStruct != NULL)
       {
-        tStruct->postProcess(aStructUtil,++aLevel);
+        tStruct->postProcess(aStructBuilder,++aLevel);
         --aLevel;
       }
       else
       {
-      std::cout << blanks[aLevel];
+        std::cout << blanks[aLevel];
         std::cout << "ERROR: can't find struct " << tIter->_Name << std::endl;
       }
     }
-    // is primitive
+    // For primitive type field,
+    // print field type and name at current indent level.
     else
     {
       std::cout << blanks[aLevel];
@@ -134,6 +160,8 @@ void Structure::postProcess(StructorUtil *aStructUtil,int aLevel)
 #endif
 }
 
+//-------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 std::string Structure::toString()
 {
   stringstream tStream;

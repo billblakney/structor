@@ -10,11 +10,11 @@
 
 using namespace std;
 
-class StructorUtil {
+class StructorBuilder {
 public:
 
-	StructorUtil();
-	virtual ~StructorUtil();
+	StructorBuilder();
+	virtual ~StructorBuilder();
 
 	void pushField(Field field);
 

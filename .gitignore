@@ -1,5 +1,6 @@
 *.H
 *.o
+*.so
 *.swp
 *.tab.c
 *.tab.h

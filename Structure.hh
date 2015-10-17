@@ -6,7 +6,7 @@
 #include <vector>
 #include "Field.hh"
 
-class StructorUtil;
+class StructorBuilder;
 
 class Structure
 {
@@ -22,7 +22,7 @@ public:
 
   void addField(Field aField);
 
-  void postProcess(StructorUtil *aStructUtil,int aLevel = 0);
+  void postProcess(StructorBuilder *aStructUtil,int aLevel = 0);
 
   std::string toString();
 

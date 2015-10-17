@@ -1,4 +1,4 @@
-#include "StructorUtil.hh"
+#include "StructorBuilder.hh"
 
 #ifndef C11
 #include <iterator>
@@ -7,26 +7,26 @@
 #include <iostream>
 #include <sstream>
 
-StructorUtil::StructorUtil() {
+StructorBuilder::StructorBuilder() {
 }
 
-StructorUtil::~StructorUtil() {
+StructorBuilder::~StructorBuilder() {
 }
 
-void StructorUtil::pushField(Field field) {
+void StructorBuilder::pushField(Field field) {
 	_Fields.push_back(field);
 }
 
-vector<Field> StructorUtil::pullFields()
+vector<Field> StructorBuilder::pullFields()
 {
   return _Fields;
 }
 
-void StructorUtil::clearFields() {
+void StructorBuilder::clearFields() {
 	_Fields.clear();
 }
 
-void StructorUtil::printFields() {
+void StructorBuilder::printFields() {
 	cout << "FIELDS:" << endl;
 #ifdef C11
 	for( auto field: _Fields ){
@@ -42,7 +42,7 @@ void StructorUtil::printFields() {
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void StructorUtil::onMatch(const char *aRuleName)
+void StructorBuilder::onMatch(const char *aRuleName)
 {
    static int _debug = 0;
    if( _debug )
@@ -51,7 +51,7 @@ void StructorUtil::onMatch(const char *aRuleName)
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void StructorUtil::onField(string *aName,string *aType,int aIsPointer)
+void StructorBuilder::onField(string *aName,string *aType,int aIsPointer)
 {
    static int _debug = 0;
    Field tField(*aName,*aType,aIsPointer);
@@ -60,7 +60,7 @@ void StructorUtil::onField(string *aName,string *aType,int aIsPointer)
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void StructorUtil::onStruct(std::string *aStructName)
+void StructorBuilder::onStruct(std::string *aStructName)
 {
    static int _debug = 0;
 
@@ -77,7 +77,7 @@ void StructorUtil::onStruct(std::string *aStructName)
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-bool StructorUtil::isPrimitive(std::string aType)
+bool StructorBuilder::isPrimitive(std::string aType)
 {
   map<std::string,Structure *>::iterator tStructIter;
   tStructIter = _Structs.find(aType);
@@ -92,7 +92,7 @@ bool StructorUtil::isPrimitive(std::string aType)
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-Structure *StructorUtil::getStructure(std::string aType)
+Structure *StructorBuilder::getStructure(std::string aType)
 {
   map<std::string,Structure *>::iterator tStructIter;
   tStructIter = _Structs.find(aType);
@@ -107,7 +107,7 @@ Structure *StructorUtil::getStructure(std::string aType)
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-std::string StructorUtil::getDotString(std::string aName,std::string aPrefix)
+std::string StructorBuilder::getDotString(std::string aName,std::string aPrefix)
 {
   stringstream tReturn;
 
@@ -140,7 +140,7 @@ std::string StructorUtil::getDotString(std::string aName,std::string aPrefix)
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void StructorUtil::postProcess()
+void StructorBuilder::postProcess()
 {
   std::string tCarReportType("CONTACT_ATTRIBUTES_REPORT_T");
 
@@ -159,7 +159,7 @@ void StructorUtil::postProcess()
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void StructorUtil::printSummary()
+void StructorBuilder::printSummary()
 {
    static int _debug = 1;
    map<std::string,Structure *>::iterator it;
