@@ -10,7 +10,7 @@ using namespace std;
 void yyerror(char *);
 int yyparse(void);
 
-extern StructorBuilder &getStructorBuilder();
+StructorBuilder *sb;
 
 void pLex(const char *aToken)
 {
@@ -52,11 +52,12 @@ void.*(.*);             {pLex("void fn");}
 void yyerror(char *str) {printf("ERROR: Could not parse!\n");}
 int yywrap(void) {}
 
-StructorBuilder &lex_main(char *tHeaderFile)
+StructorBuilder *lex_main(char *tHeaderFile)
 {
+   sb = new StructorBuilder();
    FILE* file = fopen(tHeaderFile,"r");
    yyin = file;
    yyparse();
    fclose(file);
-   return getStructorBuilder();
+   return sb;
 }

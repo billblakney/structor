@@ -32,6 +32,8 @@ public:
 
 	bool isPrimitive(std::string aType);
 
+	std::vector<std::string> getStructNames();
+
 	Structure *getStructure(std::string aType);
 
 	std::string getDotString(std::string aName,std::string aPrefix);

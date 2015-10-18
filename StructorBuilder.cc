@@ -92,6 +92,21 @@ bool StructorBuilder::isPrimitive(std::string aType)
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
+std::vector<std::string> StructorBuilder::getStructNames()
+{
+  std::vector<std::string> tNames;
+
+  map<std::string,Structure *>::iterator tIt;
+  for (tIt = _Structs.begin(); tIt != _Structs.end(); tIt++)
+  {
+    tNames.push_back(tIt->first);
+  }
+
+  return tNames;
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 Structure *StructorBuilder::getStructure(std::string aType)
 {
   map<std::string,Structure *>::iterator tStructIter;
