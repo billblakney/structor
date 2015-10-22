@@ -1,12 +1,14 @@
 MY_ENV =
 
+INCLUDES = -I/opt/boost/include
 ifeq ($(MY_ENV),CYGWIN)
 INCLUDES = -I./include -IC:/tools/cygwin64/usr/include
 INCLUDES = -I./include -I/cygdrive/c/tools/cygwin64/usr/i686-pc-mingw32/sys-root/mingw/include
 endif
 
 #LIBS = -llog4cxx -lboost_regex -lboost
-LIBS = -L/usr/lib/x86_64-linux-gnu -lboost_regex
+LIBS = -L/usr/lib/x86_64-linux-gnu -L/opt/boost/lib -lboost_regex
+#LIBS = -L/usr/lib/x86_64-linux-gnu -lboost_regex
 #LIBS = -lboost_regex
 
 EXE = structor
@@ -14,9 +16,9 @@ ALIB = structor.so
 
 CC = g++
 # To avoid missing 'fileno', need to use gnu+11 instead of c+11
-#CFLAGS = -g -std=c++11 $(INCLUDES)
-#CFLAGS = -g -std=gnu++11 $(INCLUDES)
-CFLAGS = -g $(INCLUDES) -fPIC
+#CFLAGS = -m32 -g -std=c++11 $(INCLUDES)
+#CFLAGS = -m32 -g -std=gnu++11 $(INCLUDES)
+CFLAGS = -m32 -g $(INCLUDES) -fPIC
 
 LDFLAGS = -shared
 
