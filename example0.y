@@ -1,6 +1,4 @@
 %{
-#include <cstdio>
-#include <cstdlib>
 #include <string>
 #include <map>
 using namespace std;

@@ -15,20 +15,19 @@ EXE = structor
 ALIB = structor.so
 
 CC = g++
+
+# ubuntu
 # To avoid missing 'fileno', need to use gnu+11 instead of c+11
-#CFLAGS = -m32 -g -std=c++11 $(INCLUDES)
-#CFLAGS = -m32 -g -std=gnu++11 $(INCLUDES)
-CFLAGS = -m32 -g $(INCLUDES) -fPIC
+CFLAGS = -g -std=gnu++11 -fPIC $(INCLUDES)
+
+# redhat
+#CFLAGS = -m32 -g $(INCLUDES) -fPIC
 
 LDFLAGS = -shared
 
 all : parserlexer structorutil field structure main
 	$(CC) $(CFLAGS) -o $(ALIB) lex.yy.o example0.tab.o StructorBuilder.o Field.o Structure.o main.o $(LIBS) $(LDFLAGS)
 #	$(CC) $(CFLAGS) -o $(EXE) lex.yy.o example0.tab.o StructorBuilder.o Field.o Structure.o main.o $(LIBS)
-
-#	$(CC) $(CFLAGS) lex.yy.c example0.tab.c
-# 	$(CC) $(CFLAGS) -Os -fPIC -c StructorBuilder.o Field.o Structure.o main.o
-#	$(CC) $(CFLAGS) -shared $(ALIB) lex.yy.c example0.tab.c StructorBuilder.o Field.o Structure.o main.o $(LIBS)
 
 parserlexer : parser lexer
 	$(CC) $(CFLAGS) -c lex.yy.c example0.tab.c
