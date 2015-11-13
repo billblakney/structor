@@ -6,10 +6,20 @@
 TEMPLATE = lib
 TARGET = structor.o
 DEPENDPATH += .
-INCLUDEPATH += .
+INCLUDES = -I/opt/boost/include
+# next line needed?
+#INCLUDEPATH += .
 
 QMAKE_CXX = g++
 QMAKE_CC = g++
+
+#redhat
+CFLAGS = -m32 -g $(INCLUDES) -fPIC
+LIBS = -lboost_regex
+#ubuntu
+# To avoid missing 'fileno', need to use gnu+11 instead of c+11
+#CFLAGS = -g -std=gnu++11 -fPIC $(INCLUDES)
+#LIBS += -L/usr/lib/x86_64-linux-gnu -lboost_regex
  
 # Input
 HEADERS += Field.hh StructorBuilder.hh Structure.hh
@@ -17,7 +27,6 @@ HEADERS += Field.hh StructorBuilder.hh Structure.hh
 #YACCSOURCES += parser.y
 SOURCES += main.cc Field.cc StructorBuilder.cc Structure.cc
 
-LIBS += -L/usr/lib/x86_64-linux-gnu -lboost_regex
  
 # Flex/bison specifics
  

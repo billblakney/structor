@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include "example0.tab.h"
+#include "y.tab.h"
 void yyerror(char *);
 int yyparse(void);
 

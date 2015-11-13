@@ -15,3 +15,6 @@ structor.exe
 *.dSYM/
 car.txt
 out.txt
+Makefile
+libstructor.*
+*.tab.*
